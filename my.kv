@@ -1,0 +1,57 @@
+#:kivy 0.0.1
+#:import utils kivy.utils
+
+<TestScreen>:
+    canvas.before:
+        Color:
+            rgba: utils.get_color_from_hex('#95a5a6')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    ScanCard:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+    Button:
+        id: "quitButton"
+        size_hint: None, None
+        size: 200, 100
+        pos: 1920 - 200 - 32, 32
+        text:"Quit"
+        font_size: 32
+        color: 0, 0, 0, 1
+        on_release: root.quitApp()
+        background_normal: './button_normal_up.png'
+        background_down: './button_normal_down.png'
+        border: 6, 20, 20, 6
+        
+
+<ScanCard>:
+    size_hint: None, None
+    width: 700
+    height: 600
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.parent.pos
+            size: self.size
+            source: "./button_normal_up.png"
+    Label:
+        id:"scanLabel"
+        size_hint: None, None
+        size: self.texture_size
+        pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+        text:'Please Scan your card'
+        color: utils.get_color_from_hex('#2c3e50')
+        font_size: 38
+
+    TextInput:
+        id:'scanInput'
+        focus: True
+        multiline: False
+        size_hint: 0.5, None
+        height: 40
+        on_text_validate: root.showCardInfo(self.text)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+        
